@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="r.kidslocker">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="adenda_app_id"
+            android:value="RICAFWLT6DVP8WNMASGQ" />
+        <meta-data
+            android:name="adenda_app_key"
+            android:value="WLHPSBCVMBVDEKRAVTKSOHHDQX9DI59KCZOMQR38" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:label="@string/app_name"
+            android:name="sdk.adenda.lockscreen.LockScreenAppActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:taskAffinity="sdk.adenda.lockscreen"
+            android:process=":adenda">
+        </activity>
+        <activity android:name="sdk.adenda.lockscreen.LockScreenHelperActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:process=":adenda"
+            android:taskAffinity="sdk.adenda.lockscreen">
+        </activity>
+        <service
+            android:name="sdk.adenda.lockscreen.LockscreenService"
+            android:process=":adenda" />
+        <service
+            android:name="sdk.adenda.lockscreen.RetrieveAdService"
+            android:process=":adenda" />
+        <service
+            android:name="sdk.adenda.lockscreen.RecordImprService"
+            android:process=":adenda" />
+        <receiver android:enabled="true"
+            android:name="sdk.adenda.lockscreen.AdendaReceiver"
+            android:process=":adenda">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package"
+                    android:path="sdk.adenda.lockscreen.AdendaReceiver" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package"
+                    android:path="sdk.adenda.lockscreen.AdendaReceiver"/>
+            </intent-filter>
+        </receiver>
+        <provider
+            android:name="sdk.adenda.modules.MultiprocessPreferences"
+            android:authorities="r.kidslocker.adendapreferences"
+            android:exported ="false" />
+    </application>
+
+</manifest>
